@@ -1,0 +1,56 @@
+#include<stdio.h>
+#include<stdlib.h>
+#define MAXSIZE 100
+typedef struct
+{
+	char *base;
+	char *top;
+	int stacksize;
+}sqStack;
+int InitStack(sqStack s);
+int Push(sqStack s,char e);
+int Pop(sqStack s,char *e);
+int main()
+{
+
+	sqStack s;
+	s.base=NULL;
+	s.top=NULL;
+	s.stacksize=0;
+	InitStack(s);
+	printf("分配成功\n");
+	for(int i=0;i<5;i++)
+		Push(s,'i');
+	char e;
+	for(int i=0;i<5;i++)
+	{
+		Pop(s,&e);
+		printf("%c\n",e);
+	}
+	return 0;
+}
+//创建顺序栈
+int InitStack(sqStack *s)
+{
+	
+	(*s).base =(char*)malloc(MAXSIZE*sizeof(char));
+	if(!(*s).base) return -1;
+	(*s).top=(*s).base;
+	(*s).stacksize = MAXSIZE;
+	return 1;
+}
+//入栈
+int Push(sqStack s,char e)
+{
+	if(s.top-s.base==s.stacksize) return -1;
+	*s.top++=e;
+	return 1;
+}
+//出栈
+
+int Pop(sqStack s,char *e)
+{
+	if(s.top==s.base) return -1;
+	*e= *--s.top;
+	return 1;
+}
